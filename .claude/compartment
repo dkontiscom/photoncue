@@ -1,0 +1,5 @@
+# Current build compartment.
+# Edits to code under modules/ or src/ that DO NOT match a glob below are
+# hook-blocked, so Claude Code cannot wander into a future module.
+# HUMAN-ONLY: update this when you advance to the next version (roadmap.md).
+modules/decklink-out/**

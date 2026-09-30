@@ -1,0 +1,63 @@
+{
+  "$comment": "photoncue guardrails. HARD blocks are in the PreToolUse hooks below (reliable: exit 2 blocks and feeds the reason back). permissions.allow/ask do the soft routing. permissions.deny is intentionally light because path-based deny has known reliability gaps in Claude Code; do not rely on it for enforcement. Run /hooks after install to confirm matchers actually match. TEST the hooks before trusting them: an untested hook can fail open.",
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Read",
+      "Bash(cmake:*)",
+      "Bash(make:*)",
+      "Bash(ninja:*)",
+      "Bash(meson:*)",
+      "Bash(ctest:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo test:*)",
+      "Bash(cargo check:*)",
+      "Bash(gst-inspect-1.0:*)",
+      "Bash(gst-launch-1.0:*)",
+      "Bash(clang-format:*)",
+      "Bash(clang-tidy:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git add:*)",
+      "Bash(apt-get install:*)",
+      "Bash(apt install:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(cargo add:*)",
+      "Bash(npm install:*)",
+      "Bash(npm i:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./**/.env)",
+      "Edit(./.env)",
+      "Edit(./**/.env)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/guard-bash.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/guard-edit.py"
+          }
+        ]
+      }
+    ]
+  }
+}

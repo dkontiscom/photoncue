@@ -1,0 +1,78 @@
+# --- C / C++ build (CMake / Meson / Ninja) ---
+build/
+builddir/
+_build/
+out/
+*.o
+*.obj
+*.a
+*.so
+*.so.*
+*.dylib
+*.exe
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+.ninja_deps
+.ninja_log
+
+# --- Rust / Cargo ---
+target/
+# Cargo.lock IS committed for the application crates (do not ignore it).
+
+# --- Python (guard hooks, tooling) ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# --- Node / web tooling (controller UI, when it lands) ---
+node_modules/
+dist/
+.next/
+npm-debug.log*
+yarn-error.log*
+
+# --- Vendored / downloaded SDKs (do NOT commit Blackmagic SDK) ---
+# The DeckLink SDK is downloaded per-developer from Blackmagic; keep it out of git.
+vendor/decklink-sdk/
+third_party/decklink*/
+*DeckLinkAPI*.h
+!modules/**/DeckLinkAPI*wrapper*.h
+
+# --- Media / test assets (heavy; never in git) ---
+media/
+assets/clips/
+*.mov
+*.mxf
+*.dpx
+*.exr
+*.png
+*.tiff
+*.tif
+# (keep small UI/doc images explicitly with: git add -f path/to.png)
+
+# --- Secrets / credentials (also hook-blocked; belt and braces) ---
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+secrets/
+
+# --- Node image / live-build artifacts ---
+*.iso
+*.img
+config/binary
+config/chroot
+cache/
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+!.vscode/extensions.json
